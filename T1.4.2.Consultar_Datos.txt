@@ -1,0 +1,142 @@
+//Data_Clientes
+
+/1.1. Cuenta de registros
+db.Data_Clientes.aggregate([{$count: 'documents'}]);
+
+/1.2. Agrupación por género
+db.Data_Clientes.aggregate([{$group: {
+  _id: '$genero_cli',
+  total: {
+    $sum: 1
+  }
+}}]);
+
+
+/1.3. Agrupación por departamento y promedio de ingresos
+db.Data_Clientes.aggregate([{$group: {
+  _id: '$dpto_of',
+  total: {
+    $sum: 1
+  },
+  promedio_ingresos: {
+    $avg: '$ing_mes'
+  }
+}}]);
+
+/1.4. Agrupación por escolaridad y mínimo, promedio y máximo de ingresos
+db.Data_Clientes.aggregate([{$group: {
+  _id: '$nivel_academico',
+  total: {
+    $sum: 1
+  },
+  salario_minimo: {
+    $min: '$ing_mes'
+  },
+  salario_promedio: {
+    $avg: '$ing_mes'
+  },  
+  salario_maximo: {
+    $max: '$ing_mes'
+  }
+}}]);
+
+
+
+
+//Data_Estudios
+
+/2.1. Cuenta de registros
+db.Data_Estudios.aggregate([{$count: 'documents'}]);
+
+
+/2.2. Agrupación por estado de la solicitud
+db.Data_Estudios.aggregate([{$group: {
+  _id: '$estado_solicitud_actual',
+  total: {
+    $sum: 1
+  }
+}}]);
+
+/2.3. Agrupación por tipo de solicitante
+db.Data_Estudios.aggregate([{
+    $group: {
+        _id: '$tipo_solicitante',
+        total: {
+            $sum: 1
+        }
+    }
+}]);
+
+
+
+
+//Data_Pre Estudios
+
+/3.1. Cuenta de registros
+db.Data_Pre Estudios.aggregate([{$count: 'documents'}]);
+
+/3.2. Agrupación por categoría de producto
+db.Data_Pre Estudios.aggregate([{$group: {
+  _id: '$productcategory',
+  Total: {
+    $sum: 1
+  },
+  MontoMinimo: {
+    $min: '$monto_solicitado'
+  }, 
+  MontoPromedio: {
+  $avg: '$monto_solicitado'
+  },
+  MontoMaximo: {
+  $max: '$monto_solicitado'
+  }
+}}]);
+
+/3.3. Agrupación por gastos familiares
+db.Data_Pre Estudios.aggregate([{$group: {
+  _id: '$productcategory',
+  Total: {
+    $sum: 1
+  },
+  MontoMinimo: {
+    $min: '$gtos_fmliares'
+  }, 
+  MontoPromedio: {
+  $avg: '$gtos_fmliares'
+  },
+  MontoMaximo: {
+  $max: '$gtos_fmliares'
+  }
+}}]);
+
+/3.4 Agrupación por Decisión Final
+db.Data_Pre Estudios.aggregate([{$group: {
+  _id: '$decision_final',
+  Total: {
+    $sum: 1
+  }
+}}]);
+
+
+
+//Data_Saldos
+
+/3.1. Cuenta de registros
+db.Data_Saldos.aggregate([{$count: 'documents'}]);
+
+/3.2. Resumen de capitales (minimo, máximo y promedio);
+[{$group: {
+  _id: null,
+  total: {
+    $sum : 1
+  },
+  MinCapital: {
+    $min : '$sk'
+  },
+  PromCapital: {
+    $avg : '$sk'
+  },  
+  maxCapital: {
+    $max : '$sk'
+  }
+}}]
